@@ -11,7 +11,7 @@
     tools:showIn="@layout/activity_main">
 
     <com.ebanx.swipebtn.SwipeButton
-        android:id="@+id/swipe_btn_disabled"
+        android:id="@+id/swipeBtnDisabled"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
@@ -35,14 +35,13 @@
         app:inner_text_bottom_padding="18dp" />
 
     <com.ebanx.swipebtn.SwipeButton
-        android:id="@+id/swipe_no_keep_state"
+        android:id="@+id/swipeNoState"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="20dp"
         app:button_trail_enabled="true"
-        app:button_trail_drawable="@drawable/shape_button_squared"
         app:button_image_disabled="@drawable/ic_lock_open_black_24dp"
         app:button_image_enabled="@drawable/ic_lock_outline_black_24dp"
         app:button_background="@drawable/shape_button_squared"
@@ -57,14 +56,17 @@
         app:inner_text_size="16sp"
         app:inner_text_top_padding="18dp"
         app:inner_text_bottom_padding="18dp"
-        app:has_activate_state="false"/>
+        app:has_activate_state="true"/>
+
+        <!--app:button_trail_drawable="@drawable/shape_button_squared"-->
 
     <com.ebanx.swipebtn.SwipeButton
-        android:id="@+id/swipe_btn_enabled"
+        android:id="@+id/swipeBtnEnabled"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
+        app:button_trail_enabled="true"
         app:button_image_disabled="@drawable/ic_lock_open_black_24dp"
         app:button_image_enabled="@drawable/ic_lock_outline_black_24dp"
         app:button_background="@drawable/shape_button"

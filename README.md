@@ -88,6 +88,8 @@ Or listen for the activation of the button
  - button_[direction]_padding: Sets the padding of the button the slide with the touch. You can set how big the button will be by setting the image and the padding
  - initial_state: Initial state. Default state is disabled.
  - has_activate_state: Set if the button stops in the "active" state. If false, the button will only come back to the initial state after swiped until the end of its way. Use OnActiveListener if you set the parameter to false.
+ - button_trail_enabled: Set trailing effect enabled. 
+ - button_trail_color: Set the color of the trailing effect.
 
 ## CodePen
 If you would like to see a front-end version of this button you can check a codepen in this link:
@@ -101,7 +103,7 @@ For bugs, feature requests, and discussion please use [GitHub Issues](https://gi
 ## Credits
 
  - Design: [Diego Martins](https://dribbble.com/diegomartins) 
- - Development: [Leandro Borges Ferreira](https://github.com/leandroBorgesFerreira), [Vinicius Nadin](https://github.com/viniciato)
+ - Development: [Leandro Borges Ferreira](https://github.com/leandroBorgesFerreira), [Vinicius Nadin](https://github.com/viniciato), [Rahul Kumar](https://github.com/rahulk11)
  - Codepen: [Guilherme Pressuto](https://github.com/gpressutto5)
  - Codepen: [João Issamu Francisco](https://github.com/joaoissamu)
 
