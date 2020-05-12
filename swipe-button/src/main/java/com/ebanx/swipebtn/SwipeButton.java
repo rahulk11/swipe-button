@@ -400,7 +400,7 @@ public class SwipeButton extends RelativeLayout {
                 if (onActiveListener != null) {
                     onActiveListener.onActive();
                 }
-                if (activatedText != null) {
+                if (trailEnabled && activatedText != null) {
                     activatedTextView.setText(activatedText);
                     activatedTextView.setVisibility(View.VISIBLE);
                     layer.setLayoutParams(new RelativeLayout.LayoutParams(
@@ -432,7 +432,7 @@ public class SwipeButton extends RelativeLayout {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                if (layer != null) {
+                if (trailEnabled) {
                     layer.setVisibility(View.GONE);
                 }
             }
@@ -479,7 +479,7 @@ public class SwipeButton extends RelativeLayout {
                 if (onStateChangeListener != null) {
                     onStateChangeListener.onStateChange(active);
                 }
-                if (layer != null) {
+                if (trailEnabled) {
                     layer.setVisibility(View.GONE);
                 }
             }
@@ -496,7 +496,7 @@ public class SwipeButton extends RelativeLayout {
 
     private void setTrailingEffect() {
         if (trailEnabled) {
-            if (activatedTextView != null) {
+            if (activatedText != null) {
                 activatedTextView.setVisibility(View.GONE);
             }
             layer.setVisibility(View.VISIBLE);
