@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="SwipeButton">
         <attr name="inner_text" format="string"/>
+        <attr name="activated_text" format="string"/>
         <attr name="inner_text_color" format="color"/>
         <attr name="inner_text_size" format="dimension"/>
         <attr name="inner_text_left_padding" format="dimension"/>

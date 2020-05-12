@@ -31,7 +31,6 @@ import android.widget.TextView;
  */
 
 public class SwipeButton extends RelativeLayout {
-    private String activatedText;
     private ImageView swipeButtonInner;
     private float initialX;
     private boolean active;
@@ -138,7 +137,8 @@ public class SwipeButton extends RelativeLayout {
     }
 
     public void setActivatedText(String activatedText) {
-        this.activatedText = activatedText;
+        if (activatedTextView != null)
+            activatedTextView.setText(activatedText);
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -281,7 +281,7 @@ public class SwipeButton extends RelativeLayout {
                 layer.setGravity(Gravity.CENTER);
                 layer.setVisibility(View.GONE);
                 background.addView(layer, layoutParamsView);
-
+                String activatedText = typedArray.getString(R.styleable.SwipeButton_activated_text);
                 activatedTextView = new TextView(context);
                 activatedTextView.setText(activatedText);
                 if (textSize != 0)
@@ -400,8 +400,7 @@ public class SwipeButton extends RelativeLayout {
                 if (onActiveListener != null) {
                     onActiveListener.onActive();
                 }
-                if (trailEnabled && activatedText != null) {
-                    activatedTextView.setText(activatedText);
+                if (trailEnabled) {
                     activatedTextView.setVisibility(View.VISIBLE);
                     layer.setLayoutParams(new RelativeLayout.LayoutParams(
                             (int) (getWidth()), swipeButtonInner.getHeight()));
@@ -496,9 +495,7 @@ public class SwipeButton extends RelativeLayout {
 
     private void setTrailingEffect() {
         if (trailEnabled) {
-            if (activatedText != null) {
-                activatedTextView.setVisibility(View.GONE);
-            }
+            activatedTextView.setVisibility(View.GONE);
             layer.setVisibility(View.VISIBLE);
 
             layer.setLayoutParams(new RelativeLayout.LayoutParams(
