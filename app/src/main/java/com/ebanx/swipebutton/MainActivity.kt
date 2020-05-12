@@ -28,9 +28,9 @@ class MainActivity : AppCompatActivity() {
         swipeNoState.setOnActiveListener { Toast.makeText(this@MainActivity, "Active!", Toast.LENGTH_SHORT).show() }
         swipeNoState.setActivatedText("ACTIVATED");
         toggleBtn.setOnClickListener {
-            if (!swipeBtnEnabled.isActive) {
-                swipeBtnEnabled.toggleState()
-            }
+            swipeNoState.toggleState()
+            swipeBtnDisabled.toggleState()
+            swipeBtnEnabled.toggleState()
         }
 
     }
