@@ -15,6 +15,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,16 +28,14 @@ import android.widget.TextView;
 
 /**
  * Created by leandroferreira on 07/03/17.
- * 
  */
 
 public class SwipeButton extends RelativeLayout {
-
-
+    private String activatedText;
     private ImageView swipeButtonInner;
     private float initialX;
     private boolean active;
-    private TextView centerText;
+    private TextView centerText, activatedTextView;
     private ViewGroup background;
 
     private Drawable disabledDrawable;
@@ -138,6 +137,10 @@ public class SwipeButton extends RelativeLayout {
         this.hasActivationState = hasActivationState;
     }
 
+    public void setActivatedText(String activatedText) {
+        this.activatedText = activatedText;
+    }
+
     private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         hasActivationState = true;
 
@@ -195,9 +198,20 @@ public class SwipeButton extends RelativeLayout {
                     layer.setBackground(typedArray.getDrawable(R.styleable.SwipeButton_button_background));
                 }
 
-                layer.setGravity(Gravity.START);
+                layer.setGravity(Gravity.CENTER);
                 layer.setVisibility(View.GONE);
                 background.addView(layer, layoutParamsView);
+
+                activatedTextView = new TextView(context);
+                activatedTextView.setText(activatedText);
+                activatedTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                activatedTextView.setTextColor(Color.BLACK);
+                LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams1.gravity = Gravity.CENTER;
+                layer.addView(activatedTextView, layoutParams1);
+                activatedTextView.setVisibility(View.GONE);
             }
 
             centerText.setText(typedArray.getText(R.styleable.SwipeButton_inner_text));
@@ -301,6 +315,7 @@ public class SwipeButton extends RelativeLayout {
 
                         if (event.getX() > swipeButtonInner.getWidth() / 2 &&
                                 event.getX() + swipeButtonInner.getWidth() / 2 < getWidth()) {
+                            swipeButtonInner.setVisibility(View.VISIBLE);
                             swipeButtonInner.setX(event.getX() - swipeButtonInner.getWidth() / 2);
                             centerText.setAlpha(1 - 1.3f * (swipeButtonInner.getX() + swipeButtonInner.getWidth()) / getWidth());
                             setTrailingEffect();
@@ -309,10 +324,12 @@ public class SwipeButton extends RelativeLayout {
                         if (event.getX() + swipeButtonInner.getWidth() / 2 > getWidth() &&
                                 swipeButtonInner.getX() + swipeButtonInner.getWidth() / 2 < getWidth()) {
                             swipeButtonInner.setX(getWidth() - swipeButtonInner.getWidth());
+                            swipeButtonInner.setVisibility(VISIBLE);
                         }
 
                         if (event.getX() < swipeButtonInner.getWidth() / 2) {
                             swipeButtonInner.setX(0);
+                            swipeButtonInner.setVisibility(VISIBLE);
                         }
 
                         return true;
@@ -348,6 +365,7 @@ public class SwipeButton extends RelativeLayout {
             public void onAnimationUpdate(ValueAnimator animation) {
                 float x = (Float) positionAnimator.getAnimatedValue();
                 swipeButtonInner.setX(x);
+                swipeButtonInner.setVisibility(VISIBLE);
             }
         });
 
@@ -382,6 +400,13 @@ public class SwipeButton extends RelativeLayout {
                 if (onActiveListener != null) {
                     onActiveListener.onActive();
                 }
+                if (activatedText != null) {
+                    activatedTextView.setText(activatedText);
+                    activatedTextView.setVisibility(View.VISIBLE);
+                    layer.setLayoutParams(new RelativeLayout.LayoutParams(
+                            (int) (getWidth()), swipeButtonInner.getHeight()));
+                    swipeButtonInner.setVisibility(View.INVISIBLE);
+                }
             }
         });
 
@@ -398,6 +423,7 @@ public class SwipeButton extends RelativeLayout {
             public void onAnimationUpdate(ValueAnimator animation) {
                 float x = (Float) positionAnimator.getAnimatedValue();
                 swipeButtonInner.setX(x);
+                swipeButtonInner.setVisibility(View.VISIBLE);
                 setTrailingEffect();
             }
         });
@@ -406,7 +432,7 @@ public class SwipeButton extends RelativeLayout {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                if (layer!=null) {
+                if (layer != null) {
                     layer.setVisibility(View.GONE);
                 }
             }
@@ -439,6 +465,7 @@ public class SwipeButton extends RelativeLayout {
                 ViewGroup.LayoutParams params = swipeButtonInner.getLayoutParams();
                 params.width = (Integer) widthAnimator.getAnimatedValue();
                 swipeButtonInner.setLayoutParams(params);
+                swipeButtonInner.setVisibility(View.VISIBLE);
                 setTrailingEffect();
             }
         });
@@ -452,7 +479,7 @@ public class SwipeButton extends RelativeLayout {
                 if (onStateChangeListener != null) {
                     onStateChangeListener.onStateChange(active);
                 }
-                if (layer!=null) {
+                if (layer != null) {
                     layer.setVisibility(View.GONE);
                 }
             }
@@ -469,9 +496,14 @@ public class SwipeButton extends RelativeLayout {
 
     private void setTrailingEffect() {
         if (trailEnabled) {
+            if (activatedTextView != null) {
+                activatedTextView.setVisibility(View.GONE);
+            }
             layer.setVisibility(View.VISIBLE);
+
             layer.setLayoutParams(new RelativeLayout.LayoutParams(
-                    (int) (swipeButtonInner.getX() + swipeButtonInner.getWidth() / 3), centerText.getHeight()));
+                    (int) (swipeButtonInner.getX() + swipeButtonInner.getWidth()), swipeButtonInner.getHeight()));
+
         }
     }
 
