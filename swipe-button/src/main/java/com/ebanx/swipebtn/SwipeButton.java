@@ -189,31 +189,6 @@ public class SwipeButton extends RelativeLayout {
                 background.setBackground(ContextCompat.getDrawable(context, R.drawable.shape_rounded));
             }
 
-            if (trailEnabled) {
-                layer = new LinearLayout(context);
-
-                if (trailingDrawable != null) {
-                    layer.setBackground(trailingDrawable);
-                } else {
-                    layer.setBackground(typedArray.getDrawable(R.styleable.SwipeButton_button_background));
-                }
-
-                layer.setGravity(Gravity.CENTER);
-                layer.setVisibility(View.GONE);
-                background.addView(layer, layoutParamsView);
-
-                activatedTextView = new TextView(context);
-                activatedTextView.setText(activatedText);
-                activatedTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
-                activatedTextView.setTextColor(Color.BLACK);
-                LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-                layoutParams1.gravity = Gravity.CENTER;
-                layer.addView(activatedTextView, layoutParams1);
-                activatedTextView.setVisibility(View.GONE);
-            }
-
             centerText.setText(typedArray.getText(R.styleable.SwipeButton_inner_text));
             centerText.setTextColor(typedArray.getColor(R.styleable.SwipeButton_inner_text_color,
                     Color.WHITE));
@@ -294,7 +269,32 @@ public class SwipeButton extends RelativeLayout {
                     (int) buttonBottomPadding);
 
             hasActivationState = typedArray.getBoolean(R.styleable.SwipeButton_has_activate_state, true);
+            if (trailEnabled) {
+                layer = new LinearLayout(context);
 
+                if (trailingDrawable != null) {
+                    layer.setBackground(trailingDrawable);
+                } else {
+                    layer.setBackground(typedArray.getDrawable(R.styleable.SwipeButton_button_background));
+                }
+
+                layer.setGravity(Gravity.CENTER);
+                layer.setVisibility(View.GONE);
+                background.addView(layer, layoutParamsView);
+
+                activatedTextView = new TextView(context);
+                activatedTextView.setText(activatedText);
+                if (textSize != 0)
+                    activatedTextView.setTextSize(textSize);
+                else activatedTextView.setTextSize(12);
+                activatedTextView.setTextColor(Color.BLACK);
+                LinearLayout.LayoutParams layoutParams1 = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams1.gravity = Gravity.CENTER;
+                layer.addView(activatedTextView, layoutParams1);
+                activatedTextView.setVisibility(View.GONE);
+            }
             typedArray.recycle();
         }
 
